@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+from .models import Puzzle, Entry, Clue
+
+
+def drill(request):
+    return render(request, 'xword/drill.html')
