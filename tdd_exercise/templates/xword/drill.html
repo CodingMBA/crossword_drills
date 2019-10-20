@@ -1,4 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-  XWORD DRILL
+  <div class="row justify-content-center mb-3">
+    <p>
+      <span class="font-weight-bold">CLUE:</span>
+      <span>{{ random_clue.clue_text }}</span>
+    </p>
+  </div>
+
+  <div class="row justify-content-center mb-3">
+    <form class="form-inline">
+      {% csrf_token %}
+      <div class="form-group mr-3">
+        <input type="text" class="form-control" placeholder="Enter Guess">
+      </div >
+      <input type="submit" value="Submit" class="btn btn-secondary">
+    </form>
+  </div>
+
+  <div class="row justify-content-center">
+      <a href="{% url 'answer' %}">-- Give me the Answer --</a>
+  </div>
+    
 {% endblock %}

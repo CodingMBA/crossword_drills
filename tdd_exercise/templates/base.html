@@ -18,12 +18,15 @@
 
   <body>
     <!-- Begin page content -->
-    <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-6 m-auto">
-          {% block content %}{% endblock %}
-        </div>
+    <header class="jumbotron jumbotron-fluid">
+      <div class="container text-center">
+        <h1 class="display-4">Crossword Drills</h1>
+        <p class="lead">Become a Crossword Puzzle Master!!</p>
       </div>
+    </header>
+
+    <main role="main" class="container">
+          {% block content %}{% endblock %}
     </main>
   </body>
 </html>
