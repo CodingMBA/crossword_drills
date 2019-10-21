@@ -1,24 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
-  <div class="row justify-content-center mb-3">
-    <p>
-      <span class="font-weight-bold">CLUE:</span>
-      <span>{{ random_clue.clue_text }}</span>
-    </p>
+  <div class="text-center mb-1">
+    <span class="font-weight-bold">CLUE:</span>
+    {{ random_clue.clue_text }}
   </div>
+  <div class="text-center mb-1">
+    <span class="font-weight-bold"># of characters: </span>
+    {{ random_clue.entry.entry_text|length }}
+  </div>
+  <div class="text-center mb-4">
+    <span class="font-weight-bold">From: </span>
+    {{ random_clue.puzzle }}
+  </div>
+  <hr/>
 
-  <div class="row justify-content-center mb-3">
-    <form class="form-inline">
+  <div class="row justify-content-center mt-4">
+    <form action="{% url 'drill' %}" method="post" class="form-inline">
       {% csrf_token %}
       <div class="form-group mr-3">
-        <input type="text" class="form-control" placeholder="Enter Guess">
+        <input type="text" class="form-control" name="guess" placeholder="Enter Guess">
+        <input type="hidden" name="random_clue_id" value="{{ random_clue.id }}"/>
       </div >
       <input type="submit" value="Submit" class="btn btn-secondary">
     </form>
   </div>
+  <!-- {{ random_clue.entry.entry_text }} -->
 
-  <div class="row justify-content-center">
-      <a href="{% url 'answer' %}">-- Give me the Answer --</a>
+  {% if incorrect %}
+    <div class="text-center mt-3">{{ guess }} is not correct. Guess again.</div>
+  {% endif %}
+
+  <div class="text-center mt-3">
+    <div class="mb-2">
+      <a href="{% url 'answer' random_clue.id %}">Get the Answer to this Clue</a>
+    </div>
+    <div>
+      <a href="{% url 'drill' %}">Get New Clue</a>
+    </div>
   </div>
+
     
 {% endblock %}

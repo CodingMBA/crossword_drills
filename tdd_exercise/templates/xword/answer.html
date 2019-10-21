@@ -1,4 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-  XWORD ANSWER
+<div class="text-center">
+  <div class="mb-3">
+    <h2 class="h3">Correct Answer: {{ random_clue.entry.entry_text }}</h2>
+  </div>
+  <div class="mb-3">
+    <h2 class="h4">Clue: {{ random_clue.clue_text }}</h2>
+    <div></div>
+  </div>
+  {% if match_count == 1 %}
+    <p class="mt-4 font-italic">This is the only appearance of this clue.</p>
+  {% else %}
+  <table class="table mt-5">
+      <thead>
+        <tr>
+          <th>Entry</th>
+          <th>Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ random_clue.entry.entry_text }}</td>
+          <td>{{ match_count }}</td>
+        </tr>
+      </tbody>
+  </table>
+  {% endif %}
+  <div class="mt-4">
+      <a href="{% url 'drill' %}">Get New Clue</a>
+    </div>
+</div>
 {% endblock %}

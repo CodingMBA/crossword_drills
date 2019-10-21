@@ -20,6 +20,6 @@ from xword_data import views
 urlpatterns = [
     path('', views.redirect_view),
     path('xword-drill/', views.drill, name='drill'),
-    path('xword-answer/', views.answer, name='answer'),
+    path('xword-answer/<int:random_clue_id>', views.answer, name='answer'),
     path('admin/', admin.site.urls),
 ]

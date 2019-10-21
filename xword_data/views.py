@@ -16,9 +16,32 @@ def redirect_view(request):
     return response
 
 def drill(request):
-    random_clue = get_random_clue()
-    context = {'random_clue': random_clue}
-    return render(request, 'xword/drill.html', context)
 
-def answer(request):
-    return render(request, 'xword/answer.html')
+    if request.method == 'GET':
+        context = {}
+        context['random_clue'] = get_random_clue()
+        return render(request, 'xword/drill.html', context)
+    elif request.method == 'POST':
+        context = {'incorrect': False}
+        random_clue_id = request.POST.get('random_clue_id')
+        guess = request.POST.get('guess').upper()
+        context['guess'] = guess
+
+        random_clue = Clue.objects.get(pk=random_clue_id)
+        context['random_clue'] = random_clue
+
+        if guess == random_clue.entry.entry_text:
+            return redirect('answer', random_clue_id)
+        else:
+            context['incorrect'] = True
+            return render(request, 'xword/drill.html', context)
+
+def answer(request, random_clue_id):
+    random_clue = Clue.objects.get(pk=random_clue_id)
+    matches = Entry.objects.filter(clue__clue_text=random_clue.clue_text)
+    match_count = matches.count()
+    context = {
+        'random_clue': random_clue,
+        'match_count': match_count        
+    }
+    return render(request, 'xword/answer.html', context)
